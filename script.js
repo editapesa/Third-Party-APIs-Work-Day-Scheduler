@@ -4,12 +4,8 @@ var todaysDate = moment().format("MMM Do YYYY");
 currentDayEl.text(todaysDate);
 //console.log(todaysDate);
 
-
-
-// each timeblock is color coded to indicate whether it is in the past, present, or future
-
 // click the save button for a timeblock & the text for that event is saved in local storage
-// refresh the page, the saved events persist
+// refresh the page, the saved events remain
 $('.saveBtn').on('click', function () {
     var eventDescription = $(this).siblings('.description').val();
     var timeOfDay = $(this).parent().attr('id');
@@ -27,7 +23,31 @@ $('#3pm .description').val(localStorage.getItem('3pm'));
 $('#4pm .description').val(localStorage.getItem('4pm'));
 $('#5pm .description').val(localStorage.getItem('5pm'));
 
+// each timeblock is color coded to indicate whether it is in the past, present, or future
+function timeChecker() {
+    var currentTime = moment().hour();
 
+    $('.time-block').each(function() {
+        var scheduleHour = parseInt($(this).attr('id').split('hour')[1]);
+
+        if (scheduleHour , currentTime) {
+            $(this).addClass('past');
+            $(this).removeClass('future');
+            $(this).removeClass('present');
+        }
+        else if (scheduleHour === currentTime) {
+            $(this).removeClass('past');
+            $(this).addClass('present');
+            $(this).removeClass('future');
+        }
+        else {
+            $(this).removeClass('present');
+            $(this).removeClass('past');
+            $(this).addClass('future');
+        }
+    })
+}
+timeChecker();
 
 
 
